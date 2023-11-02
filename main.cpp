@@ -97,6 +97,7 @@ int main() {
         exit(1);
     }
 
+    usleep(500000);
     // 4、接收数据
     int receive_num = 10;
     VCI_CAN_OBJ pReceive[3000];
@@ -106,7 +107,7 @@ int main() {
         if ((relen = VCI_Receive(VCI_USBCAN2, 0, 0, pReceive, 3000, 100)) > 0) {
             for (int i = 0; i < relen; ++i) {
                 // 数据类型信息
-                cout << "Index:" << count++ << " CAN:1 Rx ID:0x" << hex << pReceive[i].ID;
+                cout << "Index:" << setw(2) << setfill('0') << count++ << " CAN:1 Rx ID:0x" << hex << pReceive[i].ID;
                 if (pReceive[i].ExternFlag == 0) cout << " Standard";
                 if (pReceive[i].ExternFlag == 1) cout << " Extend";
                 if (pReceive[i].RemoteFlag == 0) cout << " Date";
@@ -114,7 +115,7 @@ int main() {
                 cout << " DLC:0x:" << static_cast<int>(pReceive[i].DataLen);
                 cout << " data:0x";
                 for (int j = 0; j < pReceive[i].DataLen; ++j) {
-                    cout << " " << static_cast<int>(pReceive[i].Data[j]);
+                    cout << " " << setw(2) << setfill('0') << static_cast<int>(pReceive[i].Data[j]);
                 }
                 cout << " TimeStamp:0x" << hex << setw(8) << setfill('0') << pReceive[i].TimeStamp << endl;
             }
@@ -124,4 +125,5 @@ int main() {
     // 关闭设备
     VCI_CloseDevice(VCI_USBCAN2, 0);
     return 0;
+
 }
