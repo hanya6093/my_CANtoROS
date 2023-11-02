@@ -121,4 +121,7 @@ int main() {
         }
     }
 
+    // 关闭设备
+    VCI_CloseDevice(VCI_USBCAN2, 0);
+    return 0;
 }
